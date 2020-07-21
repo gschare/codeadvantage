@@ -59,7 +59,7 @@ class Bunny(Pet):
 
 fido = Dog("fido", "john", "pitbull", 3, 80)
 sierra = Dog("sierra", "gregory", "boxer", 4, 40) # my dog!
-apollo = Dog("apollo", "gregory", "terrier", 9, 20) # my do!
+apollo = Dog("apollo", "gregory", "terrier", 9, 20) # my other dog!
 hops = Bunny("hops", "lucas", "white", 0, 2)
 pets = [fido, hops, sierra, apollo]
 
