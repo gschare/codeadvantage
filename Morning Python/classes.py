@@ -1,7 +1,5 @@
 class Animal:
-    age = 0
-    weight = 0
-    
+    # The constructor
     def __init__(self, age, weight):
         self.age = age
         self.weight = weight
@@ -16,11 +14,9 @@ class Animal:
         self.weight += amount
 
 class Pet(Animal):
-    name = ""
-    owner = ""
-    age = 0
-    weight = 0
-
+    isAnimal = True
+    # Constructor
+    # "overriding"
     def __init__(self, name, owner, age, weight):
         super().__init__(age, weight)
         self.name = name
@@ -30,26 +26,18 @@ class Pet(Animal):
         return self.name
 
 class Dog(Pet):
-    name = ""
-    owner = ""
-    breed = ""
-    age = 0
-    weight = 0
-
-    def __init__(self, name, owner, breed, age, weight):
+    def __init__(self, name, owner, breed, age, weight, sound):
         super().__init__(name, owner, age, weight)
         self.breed = breed
+        self.sound = sound
 
-    def getDogYears(self):
-        return self.age*7
+    def getAge(self):
+        return super().getAge()*7
+
+    def bark(self):
+        print(self.sound)
 
 class Bunny(Pet):
-    name = ""
-    owner = ""
-    color = ""
-    age = 0
-    weight = 0
-
     def __init__(self, name, owner, color, age, weight):
         super().__init__(name, owner, age, weight)
         self.color = color
@@ -57,10 +45,10 @@ class Bunny(Pet):
     def getColor(self):
         return self.color
 
-fido = Dog("fido", "john", "pitbull", 3, 80)
-sierra = Dog("sierra", "gregory", "boxer", 4, 40) # my dog!
-apollo = Dog("apollo", "gregory", "terrier", 9, 20) # my other dog!
-hops = Bunny("hops", "lucas", "white", 0, 2)
+fido = Dog("fido", "john", "pitbull", 3, 80, "ruff!")
+sierra = Dog("sierra", "gregory", "boxer", 4, 40, "roo!") # my dog!
+apollo = Dog("apollo", "gregory", "terrier", 9, 20, "yap!") # my other dog!
+hops = Bunny("hops", "lucas", "white", 1, 2)
 pets = [fido, hops, sierra, apollo]
 
 def feedPets(list_of_pets, amount):
@@ -72,3 +60,6 @@ def feedPets(list_of_pets, amount):
         print("After:", pet.getWeight(), "lbs")
 
 feedPets(pets, 5)
+
+print("\n", sierra.getAge())
+print(hops.getAge())
