@@ -1,37 +1,27 @@
-# https://docs.python.org/3/library/turtle.html
-
+# Reference: https://docs.python.org/3/library/turtle.html
 import turtle
 
 # setup
-turtle.setup(width=500, height=500)
-screen = turtle.Screen()
-t = turtle.Turtle(shape="turtle")
+w, h = 500, 500                   # define the canvas dimensions
+turtle.setup(width=w, height=h)   # this controls the canvas dimensions
+screen = turtle.Screen()          # this makes the canvas interactable
+t = turtle.Turtle(shape="turtle") # this lets us draw stuff
 t.color("green")
 
-'''
-def togglePen():
-    if t.isdown():
-        t.penup()
-    else:
-        t.pendown()
-
-# script
-screen.onscreenclick(t.goto, btn=1)
-screen.onscreenclick(togglePen(), btn=3)
-'''
-
 # draw a shape with a certain number of sides
-def drawShape(myTurtle, num_sides):
-    # square: 360 deg
-    # triangle: 180 deg
-    # pentagon: 540 deg
-    # hexagon: 720 deg
+def drawShape(myTurtle, num_sides, side_length):
     degrees = ((num_sides - 2)*180)/num_sides
     for _ in range(num_sides):
-        myTurtle.forward(100)
+        myTurtle.forward(side_length)
         myTurtle.right(180 - degrees)
 
-drawShape(t, 8)
+# tell my turtle t to draw a shape with 8 sides and side length 100 pixels
+drawShape(t, 8, 100)
+
+# control turtle with mouse click
+screen.onscreenclick(t.goto, btn=1)
+
 turtle.mainloop()
 
-
+# Homework: play around with this! See what you can do!
+# We will continue using turtle in the coming classes, so get familiar.
