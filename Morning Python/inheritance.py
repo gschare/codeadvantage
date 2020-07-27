@@ -36,9 +36,6 @@ class Student(Person):
     def giveDetention(self):
         self.num_detentions += 1
 
-principal = Person("Cisco", 100, "American")    
-Student1 = Student("Gregory", 19, "American")
-Student2 = Student("Isaac", 12, "American")
-Student3 = Student("Adyasha", 10, "American")
-
-roster = [Student1, Student2, Student3]
+principal = Person("Edward Rooney", 100, "American")    
+Student1 = Student("Gregory Schare", 19, "American")
+Student3 = Student("Ferris Bueller", 18, "American")
