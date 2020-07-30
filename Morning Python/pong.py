@@ -48,7 +48,7 @@ class Ball:
     color = "white"
 
     min_velocity = 2
-    max_velocity = 4
+    max_velocity = 2
     velocity_horiz = 0
     velocity_vert = 0
 
@@ -62,6 +62,7 @@ class Ball:
     def getPos(self):
         return Posn(self._ball.xcor(), self._ball.ycor())
 
+    # main movement method
     def update(self, field, paddle_left, paddle_right):
         wall_collision = self.check_wall_collision(field)
         paddle_collision = self.check_paddle_collision(paddle_left) \
@@ -72,11 +73,13 @@ class Ball:
         self._ball.setx(self._ball.xcor() + self.velocity_horiz)
         self._ball.sety(self._ball.ycor() + self.velocity_vert)
 
+    # collisions with top and bottom of field
     def check_wall_collision(self, field):
         top_collision = self.getPos().y + self.radius >= field.boundary_top
         bottom_collision = self.getPos().y - self.radius <= field.boundary_bottom
         return top_collision or bottom_collision
 
+    # collisions with paddles
     def check_paddle_collision(self, paddle):
         distance_x = abs(paddle.getPos().x - self.getPos().x)
         distance_y = abs(paddle.getPos().y - self.getPos().y)
@@ -128,11 +131,13 @@ class Paddle:
         elif self.side=="R":
             self._paddle.setx(field.boundary_right - self.boundaryoffset)
 
+    # main movement method
     def update(self, field):
         new_y = self.getPos().y + (self.velocity * self.direction)
         if not self.check_wall_collision(field):
             self._paddle.sety(new_y)
 
+    # stop paddle if hitting top or bottom
     def check_wall_collision(self, field):
         new_y = self.getPos().y + (self.velocity * self.direction)
         if (new_y - (self.height/2) < field.boundary_bottom):
@@ -142,6 +147,7 @@ class Paddle:
         else:
             return False
 
+    # gets direction to move from player input
     def move(self, direction):
         self.direction = direction
 
@@ -188,6 +194,10 @@ class Game:
         self.paddle_left.reset(self.field)
         self.paddle_right.reset(self.field)
 
+    # check if a player wins (ball hits edge)
+    # this combined with check_paddle_collision is probably what's
+    # responsible for the bugs we see with the ball getting "stuck"
+    # on a paddle
     def check_score(self):
         if (self.ball.getPos().x + self.ball.radius >= self.field.boundary_right):
             self.scoreboard.incrementScore("left")
@@ -198,12 +208,14 @@ class Game:
             self.ball.reset(self.field)
             self.scoreboard.update()
 
+    # direct paddle movement from player input
     def movePaddle(self, side, direction):
         if side=="L":
             self.paddle_left.move(direction)
         elif side=="R":
             self.paddle_right.move(direction)
 
+    # main loop
     def frame(self):
         self.check_score()
         self.paddle_left.update(self.field)
@@ -215,6 +227,7 @@ class Game:
 
 game = Game()
 
+# movement functions
 leftup    = lambda: game.movePaddle("L", 1)
 leftdown  = lambda: game.movePaddle("L", -1)
 leftstop  = lambda: game.movePaddle("L", 0)
@@ -224,14 +237,17 @@ rightstop = lambda: game.movePaddle("R", 0)
 
 game.frame()
 
+# player input
 SCREEN.onkeypress(leftup, key="w")
 SCREEN.onkeypress(leftdown,  key="s")
 SCREEN.onkeyrelease(leftstop, "w")
 SCREEN.onkeyrelease(leftstop, "s")
+
 SCREEN.onkeypress(rightup, key="Up")
 SCREEN.onkeypress(rightdown, key="Down")
 SCREEN.onkeyrelease(rightstop, "Up")
 SCREEN.onkeyrelease(rightstop, "Down")
+
 SCREEN.listen()
 
 SCREEN.mainloop()
