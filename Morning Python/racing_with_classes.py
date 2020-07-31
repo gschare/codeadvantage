@@ -4,7 +4,7 @@ w, h = 1000, 400
 screen = turtle.Screen()
 screen.setup(width=w, height=h)
 screen.tracer(0)
-framerate = 20
+framerate = 5
 
 class Field:
     offset = 20
@@ -30,11 +30,13 @@ class Field:
 class RacingTurtle:
     time = 0.1
     isPlayer = False
-    turn_limit = 15
+    turn_limit = 10
     min_speed = 0
-    max_speed = 10
+    max_speed = 2
     size = 10
     starting_x_offset = 20
+    allowed_to_move = True # False when colliding with edge
+    bounce_angle = 90
     
     def __init__(self, name, color, starting_y, field):
         self.field = field
@@ -62,10 +64,12 @@ class RacingTurtle:
         # if the turtle is a player, don't turn randomly
         turn_angle = random.randint(-self.turn_limit, self.turn_limit) * (not self.isPlayer)
         speed = random.randint(self.min_speed, self.max_speed)
-        self.turtle.forward(speed)
-        self.turtle.right(turn_angle)
+        self.turtle.forward(speed*self.allowed_to_move)
+        self.turtle.right(turn_angle*self.allowed_to_move)
 
         if self.check_collision():
+            # stop the turtle from going forwards until it stops colliding
+            self.allowed_to_move = False
             print(f'Collision: {self.name} ({self.color})')
             dx = self.turtle.xcor() - self.prevx
             dy = self.turtle.ycor() - self.prevy
@@ -73,8 +77,10 @@ class RacingTurtle:
                 direction = 1
             else:
                 direction = -1
-            self.turtle.right(180)  # direction is -1 or 1
-            self.turtle.forward(20)
+            self.turtle.right(self.bounce_angle)  # direction is -1 or 1
+            self.turtle.forward(10)
+        else:
+            self.allowed_to_move = True # allow turtle to go forwards
 
         self.prevx = self.turtle.xcor()
         self.prevy = self.turtle.ycor()
@@ -111,13 +117,13 @@ player = RacingTurtle("Gregory", "green", positions[2], field)
 player.isPlayer = True
 
 def goLeft():
-    player.turtle.left(10)
+    player.turtle.left(player.turn_limit)
 
 def goRight():
-    player.turtle.right(10)
+    player.turtle.right(player.turn_limit)
 
-screen.onkey(goLeft, key="Left")
-screen.onkey(goRight, key="Right")
+screen.onkeypress(goLeft, key="Left")
+screen.onkeypress(goRight, key="Right")
 screen.listen()
 
 # soon we will convert this while loop to a framerate loop to keep it consistent
