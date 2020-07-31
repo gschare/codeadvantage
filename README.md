@@ -11,5 +11,5 @@ I'm using it to allow you to access code we did in class.
 5. Save!
 
 # What to take after Python Level 3:
-- Python Game Quest (taught by me, starting August 10th, same)
+- Python Game Quest (taught by me, starting August 10th, same time)
 - Animal Expedition (following Game Quest in the fall)
