@@ -9,3 +9,7 @@ I'm using it to allow you to access code we did in class.
 3. Near the top of the file, find the "Raw" button and click it. You should now see just the code.
 4. Select the entire code and copy-paste it into the IDLE editor window.
 5. Save!
+
+# What to take after Python Level 3:
+- Python Game Quest (taught by me, starting August 10th, same time)
+- Animal Expedition (following Game Quest in the fall)
