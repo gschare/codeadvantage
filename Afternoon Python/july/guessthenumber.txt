@@ -1,0 +1,10 @@
+The computer thinks of a random number 1-10. User has to guess.
+Guess the Number:
+	Do the following while guess is incorrect:
+		1. Set number equal to random number from 1 to 10.
+		2. Print "I'm thinking of a number..."
+		3. Set guess equal to input: "Guess the number. "
+		4. If guess is equal to number:
+			a. Print("Correct! You won.")
+		5. Else:
+			a. Print("Incorrect. Guess again!")

@@ -1,0 +1,10 @@
+Rules:
+- video on
+- stay muted (unless you have a question)
+
+Today:
+- improvements to Guess the Number
+- increment/decrement operators
+- loops
+- type casting
+- cashier algorithm

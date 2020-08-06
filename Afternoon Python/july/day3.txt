@@ -1,0 +1,23 @@
+Algorithm: set of instructions to reach a desired result
+
+Algorithm must be:
+	1. Clear (unambiguous)
+		rinse? rinse what?
+	2. stopping point
+	3. every instruction must be doable
+
+Self-driving car algorithm:
+	1. Turn on the engine.
+	2. If country==India, then:
+		a. Drive on the left side of the road.
+	3. Else, if country==England, then:
+		a. Drive on the left side of the road.
+	4. Else, then:
+		a. Drive on the right side of the road.
+	2. If car is low on gas, then:
+		a. Drive to gas station.
+		b. Refill gas.
+		c. Pay.
+		d. Return to previous route.
+	3. Drive to `destination` using `route`.
+	4. Turn off engine.

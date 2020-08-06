@@ -1,0 +1,43 @@
+Algorithm: "set of instructions to reach a desired result"
+
+Muhammad ibn Musa Al-Khwarizmi -- Persian mathematician
+
+How to shampoo your hair:
+1. Wet hair
+2. Rinse
+	rinse what?
+	rinse for how long?
+3. Lather
+	lather what?
+	lather for how long?
+4. Repeat
+	repeat what?
+	repeat(1-4)
+	how many times should I repeat it?
+5. Stop.
+Output: clean hair
+
+Algorithms MUST be:
+	1. unambiguous
+	2. stopping point
+
+A better algorithm:
+	1. Wet(hair)
+	2. Rinse(hair) until entirely wet
+	3. Lather(hair) for 30 seconds
+	4. Repeat(all steps) 3 times
+
+pseudocode
+
+syntax error: rules "grammar" of Python
+runtime error: Python runs the file but encounters something it doesn't understand or breaks the rules
+logic error: your program doesn't do what you want it to do
+
+Logic error in shampoo algorithm:
+	1. Wet hair
+	2. Rinse
+	3. Repeat
+Logic error:
+	- perfect grammar
+	- runs the file
+	- doesn't achieve what I was hoping

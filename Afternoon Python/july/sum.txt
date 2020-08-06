@@ -1,0 +1,15 @@
+Sum a list of numbers:
+	- set list_of_nums to an empty list []
+	- ask the user how many numbers they want to add
+	- set i = 0
+	- while i < number:
+		- get input("Give me a list")
+		- convert input to int
+		- append input to list_of_nums
+		- i += 1
+	- set total = 0
+	- set i = 0
+	- While i < len(list_of_nums):
+		- For each number, add its value to total
+		- i += 1
+	- Print(total)
