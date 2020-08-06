@@ -5,7 +5,7 @@ screen = turtle.Screen()
 screen.setup(width=w, height=h)
 screen.tracer(0)
 framerate = 5
-num_obstacles = 50
+num_obstacles = 500
 
 class Field:
     offset = 20
