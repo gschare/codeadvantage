@@ -1,0 +1,7 @@
+continue with graphics (3-D graphics) (Processing)
+app interface/user interface (tkinter)
+web-scraping
+autoclickers
+graphs and plots
+image processing
+	- converting an image to ascii

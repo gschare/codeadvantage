@@ -1,0 +1,4 @@
+Different types of errors:
+ Syntax Error: a grammar problem
+ Runtime Error: a problem occurring in the middle of your code when you run it
+ Logic Error: the code runs but doesn't do what you want it to do

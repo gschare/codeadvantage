@@ -1,0 +1,30 @@
+Pseudocode
+Algorithms
+
+algorithm:
+ - set of stuff that shows something or mean something
+ - way to solve something like a puzzle
+ - specifying/explaining something
+
+algorithm (officially):
+ - set of instructions to reach a desired result
+
+requirements to be an algorithm:
+ 1. clear
+ 2. have a stopping point
+ 3. computable: able to perform the task
+
+"algorithm" comes from Muhummad ibn Musa Al-Khwarizmi, he was a Persian mathematician
+
+also invented "algebra"
+
+addition algorithm:
+ 1. give two numbers
+ 2. put them on top of each other
+ 3. add columns from right to left
+ 4. result is your answer
+
+
+Pseudocode:
+- description of the steps of an algorithm as specifically and clearly as possible
+

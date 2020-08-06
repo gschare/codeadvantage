@@ -1,0 +1,13 @@
+Goals for this algorithm:
+	Input: a name
+	Output: a print statement saying hello
+
+1. Get the user's name and assign it to variable "name"
+2. Print "hello" + name + an exclamation point
+
+
+
+
+1. Get the user's name
+2. Save the user's name to variable "name"
+3. Define "greeting" to be "Hello, "
