@@ -4,4 +4,4 @@ web-scraping
 autoclickers
 graphs and plots
 image processing
-	- converting an image to ascii
+	- converting an image to asciiwe

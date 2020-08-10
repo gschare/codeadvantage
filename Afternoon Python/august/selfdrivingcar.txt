@@ -1,0 +1,18 @@
+self-driving car algorithm:
+   1. Turn on the engine
+   2. Take a destination
+   3. Find a route to the destination using satellites
+   4. If the tank is less than a quarter full:
+	4.5. then, go get gas at a gas station.
+      otherwise, go to the next step.
+   5. Drive to the destination
+
+   6. If the traffic light is red:
+      6.5. Stop. Wait until green.
+   7. Else, if the traffic light is green:
+      7.5. Continue.
+   8. Else, if the traffic light is yellow:
+      8.5. Speed up to get through!
+
+"controlled the flow"
+"control flow"

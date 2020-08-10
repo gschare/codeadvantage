@@ -1,0 +1,13 @@
+Weatherman algorithm:
+ which tells you how to dress for the weather
+
+1. Get the temperature.
+2. If temp>90 degrees Fahrenheit:
+   - tell the user to wear shorts
+3. If temp>70 degrees:
+   - wear a t-shirt
+
+...
+
+10. If temp > 0:
+   - wear a parka

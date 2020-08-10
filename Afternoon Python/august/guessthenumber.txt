@@ -1,0 +1,8 @@
+Guess the number:
+  1. Computer comes up with a random number 1-10.
+  2. The user guesses a number.
+  3. If the guess is correct,
+     - Print you win
+  4. Otherwise,
+     - Print you lost
+     - Repeat from step 2 a maximum of 3 times.
