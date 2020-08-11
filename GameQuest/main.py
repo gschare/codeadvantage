@@ -1,5 +1,6 @@
 import turtle
-import random
+import random       # random.randint()
+from player import Player   # Player()
 
 # Screen setup
 screen = turtle.Screen()
@@ -8,13 +9,7 @@ screen.bgcolor("black")
 screen.screensize(1000, 500) # canvas size
 screen.setup(1050, 550)      # window size
 
-# Player setup
-player = turtle.Turtle()
-player.shapesize(3.0, 3.0)
-player.penup()
-player.shape("turtle")
-player.color((0.1, 0.9, 0.1)) # lime color in r,g,b
-player.fillcolor("black")
+
 
 game_borders = {
     'min_x' : -screen.window_width()/2,
@@ -23,43 +18,44 @@ game_borders = {
     'max_y' : screen.window_height()/2
     }
 
-def check_borders(t):
-    if (t.xcor() < game_borders['min_x'] or t.xcor() > game_borders['max_x'] or
-        t.ycor() < game_borders['min_y'] or t.ycor() > game_borders['max_y']):
-        t.backward(25)
+me = Player()
 
 def move_forward():
-    player.forward(10)
-    check_borders(player)
+    me.player.forward(10)
+    me.update(game_borders)
 
 def move_backward():
-    player.backward(10)
-    check_borders(player)
+    me.player.backward(10)
+    me.update(game_borders)
 
 def turn_left():
-    player.left(15)
-    check_borders(player)
+    me.player.left(15)
+    me.update(game_borders)
 
 def turn_right():
-    player.right(15)
-    check_borders(player)
+    me.player.right(15)
+    me.update(game_borders)
+
+enemies = []
+for _ in range(50):
+    enemies.append(turtle.Turtle())
+    enemies[-1].penup()
+    enemies[-1].color("red")
+    enemies[-1].goto(
+        random.randint(game_borders['min_x'], game_borders['max_x']), # x
+        random.randint(game_borders['min_y'], game_borders['max_y'])  # y
+        )
+
+def move_enemies():
+    for enemy in enemies:
+        enemy.forward(random.randint(0,10))
+        enemy.left(random.randint(-15,15))
+    screen.ontimer(move_enemies, 100)
 
 screen.onkeypress(move_forward, 'Up')
 screen.onkeypress(move_backward, 'Down')
 screen.onkeypress(turn_left, 'Left')
 screen.onkeypress(turn_right, 'Right')
-
-
-
-def f():
-    r = random.uniform(0,1)
-    g = random.uniform(0,1)
-    b = random.uniform(0,1)
-    player.color((r,g,b))
-    screen.update()
-    screen.ontimer(f, 250)
-
-f()
 
 # Main loop
 screen.listen()
