@@ -3,8 +3,9 @@ import turtle, random
 class Enemy:
     outline_color = (1.0, 0.0, 0.0) # red
     size = 1.0
+    radius = 5
     min_move_speed = 0
-    max_move_speed = 10
+    max_move_speed = 5
     min_turn_speed = -15
     max_turn_speed = 15
 

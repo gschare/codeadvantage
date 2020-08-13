@@ -18,6 +18,12 @@ screen.onkeypress(game.move_backward, 'Down')
 screen.onkeypress(game.turn_left, 'Left')
 screen.onkeypress(game.turn_right, 'Right')
 
+def playermove(x,y):
+    game.me.player.setheading(game.me.player.towards(x,y))
+    game.me.player.forward(20)
+
+screen.onscreenclick(playermove)
+
 def frame():
     game.update()
     screen.update() # update screen
