@@ -9,25 +9,24 @@ screen.screensize(1000, 500) # canvas size
 screen.setup(1050, 550)      # window size
 screen.tracer(0) # set animation time to 0
 
-framerate = 10
+framerate = 10 # refresh screen every 1/10th of a second
 
-game = Game(screen)
-
-screen.onkeypress(game.move_forward, 'Up')
-screen.onkeypress(game.move_backward, 'Down')
-screen.onkeypress(game.turn_left, 'Left')
-screen.onkeypress(game.turn_right, 'Right')
+game = Game(screen) # initialize our Game class, with controls all game elements
 
 def playermove(x,y):
-    game.me.player.setheading(game.me.player.towards(x,y))
-    game.me.player.forward(20)
+    game.me.update_destination((x,y))
 
-screen.onscreenclick(playermove)
+screen.onscreenclick(playermove) # Club Penguin-style click movement
+
+screen.onkeypress(game.move_forward, 'w')
+screen.onkeypress(game.move_backward, 's')
+screen.onkeypress(game.turn_left, 'a')
+screen.onkeypress(game.turn_right, 'd')
 
 def frame():
-    game.update()
-    screen.update() # update screen
-    screen.ontimer(frame, framerate)
+    game.update() # update all game elements
+    screen.update() # update screen 
+    screen.ontimer(frame, framerate) # repeat after 1/10th of a second
 
 frame()
 

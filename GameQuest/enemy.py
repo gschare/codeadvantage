@@ -2,10 +2,11 @@ import turtle, random
 
 class Enemy:
     outline_color = (1.0, 0.0, 0.0) # red
+    # maybe disguise as food? same shape, random colors?
     size = 1.0
     radius = 5
     min_move_speed = 0
-    max_move_speed = 5
+    max_move_speed = 2
     min_turn_speed = -15
     max_turn_speed = 15
 
@@ -19,24 +20,51 @@ class Enemy:
             random.randint(game_borders['min_y'], game_borders['max_y'])  # y
         )
 
+    # same as player border collision
     def check_border_collision(self, game_borders):
-        left = self.enemy.xcor() < game_borders['min_x']
-        right = self.enemy.xcor() > game_borders['max_x']
-        bottom = self.enemy.ycor() < game_borders['min_y']
-        top = self.enemy.ycor() > game_borders['max_y']
+        left   = self.enemy.xcor() - self.radius < game_borders['min_x']
+        right  = self.enemy.xcor() + self.radius> game_borders['max_x']
+        bottom = self.enemy.ycor() - self.radius < game_borders['min_y']
+        top    = self.enemy.ycor() + self.radius > game_borders['max_y']
 
         if left or right or bottom or top:
             return True
         else:
             return False
 
+    # in some sense, we might want to add an object collision function here
+    # to check whether a given enemy has collided with the player.
+    # Advantages of doing it this way include:
+    #  - we can have direct effects on the enemy when they collide with the player
+    #       (e.g. if player has shields on then enemy should die)
+
+    # We probably only want one of them to check, though. So either player checks
+    # for collision with enemy, or enemy checks with collision with player.
+    # If we do both, we are wasting computer power. 
+
+    # If the player is the one checking, it will be more difficult to tell
+    # WHICH enemy you collided with. Whereas if the enemy is checking, there's
+    # only one person it can be: the player. So we just need to report the
+    # collision to the gamestate and then the effects will be dictated to the
+    # player indirectly but just as effectively.
+
+    # If we really care about processing speed, this will also make it much easier
+    # to optimize since having each enemy check if they're anywhere near the player
+    # is much easier than have the player check if they're near any enemy.
+
+    # movement/update function
     def update(self, game_borders):
+
+        # turn randomly left or right
         self.enemy.left(random.randint(
             self.min_turn_speed, self.max_turn_speed))
 
+        # move a random amount forward
         if not self.check_border_collision(game_borders):
             self.enemy.forward(random.randint(
                 self.min_move_speed, self.max_move_speed))
-        else:
+
+        # if you collide with the border, turn around and move away
+        else: 
             self.enemy.right(180)
             self.enemy.forward(self.max_move_speed)
