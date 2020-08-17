@@ -10,22 +10,22 @@ class Enemy:
     min_turn_speed = -15
     max_turn_speed = 15
 
-    def __init__(self, game_borders):
-        self.enemy = turtle.Turtle()
-        self.enemy.shapesize(self.size, self.size)
-        self.enemy.penup()
-        self.enemy.color(self.outline_color)
-        self.enemy.goto(
-            random.randint(game_borders['min_x'], game_borders['max_x']), # x
-            random.randint(game_borders['min_y'], game_borders['max_y'])  # y
+    def __init__(self, gamestate):
+        self._enemy = turtle.Turtle()
+        self._enemy.shapesize(self.size, self.size)
+        self._enemy.penup()
+        self._enemy.color(self.outline_color)
+        self._enemy.goto(
+            random.randint(gamestate['min_x'], gamestate['max_x']), # x
+            random.randint(gamestate['min_y'], gamestate['max_y'])  # y
         )
 
     # same as player border collision
-    def check_border_collision(self, game_borders):
-        left   = self.enemy.xcor() - self.radius < game_borders['min_x']
-        right  = self.enemy.xcor() + self.radius> game_borders['max_x']
-        bottom = self.enemy.ycor() - self.radius < game_borders['min_y']
-        top    = self.enemy.ycor() + self.radius > game_borders['max_y']
+    def check_border_collision(self, gamestate):
+        left   = self._enemy.xcor() - self.radius < gamestate['min_x']
+        right  = self._enemy.xcor() + self.radius> gamestate['max_x']
+        bottom = self._enemy.ycor() - self.radius < gamestate['min_y']
+        top    = self._enemy.ycor() + self.radius > gamestate['max_y']
 
         if left or right or bottom or top:
             return True
@@ -53,18 +53,18 @@ class Enemy:
     # is much easier than have the player check if they're near any enemy.
 
     # movement/update function
-    def update(self, game_borders):
+    def update(self, gamestate):
 
         # turn randomly left or right
-        self.enemy.left(random.randint(
+        self._enemy.left(random.randint(
             self.min_turn_speed, self.max_turn_speed))
 
         # move a random amount forward
-        if not self.check_border_collision(game_borders):
-            self.enemy.forward(random.randint(
+        if not self.check_border_collision(gamestate):
+            self._enemy.forward(random.randint(
                 self.min_move_speed, self.max_move_speed))
 
         # if you collide with the border, turn around and move away
         else: 
-            self.enemy.right(180)
-            self.enemy.forward(self.max_move_speed)
+            self._enemy.right(180)
+            self._enemy.forward(self.max_move_speed)

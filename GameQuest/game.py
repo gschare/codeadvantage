@@ -28,32 +28,32 @@ class Game:
         self.gamestate['score'] = self.me.score # get player's initial score (0)
 
         self.food = Food(self.gamestate) # initialize the food
-        self.gamestate['food'] = self.food.food.pos() # get the food position
+        self.gamestate['food'] = self.food._food.pos() # get the food position
 
         self.enemies = [] # initialize list of enemies
         for _ in range(self.num_enemies):
             self.enemies.append(Enemy(self.gamestate)) # create enemies one by one
             # add each enemy's initial position to gamestate
-            self.gamestate['enemies'].append(self.enemies[-1].enemy.pos())
+            self.gamestate['enemies'].append(self.enemies[-1]._enemy.pos())
 
         # create the scoreboard
         self.scoreboard = Scoreboard(self.gamestate)
 
     # player movement functions (not really used)
     def move_forward(self):
-        self.me.player.forward(10)
+        self.me._player.forward(10)
         self.me.update(self.gamestate)
 
     def move_backward(self):
-        self.me.player.backward(10)
+        self.me._player.backward(10)
         self.me.update(self.gamestate)
 
     def turn_left(self):
-        self.me.player.left(15)
+        self.me._player.left(15)
         self.me.update(self.gamestate)
 
     def turn_right(self):
-        self.me.player.right(15)
+        self.me._player.right(15)
         self.me.update(self.gamestate)
 
     # iterate over list of enemies and call their update methods
@@ -65,26 +65,30 @@ class Game:
     def update_gamestate(self):
         positions = []
         for e in self.enemies:
-            positions.append(e.enemy.pos())
+            positions.append(e._enemy.pos())
         self.gamestate["enemies"] = positions # gather enemy positions
 
-        self.gamestate["food"] = self.food.food.pos() # get food position
+        self.gamestate["food"] = self.food._food.pos() # get food position
         self.gamestate["score"] = self.me.score # get current score
 
     def update(self):
+
+        self.move_enemies()
+        self.me.update(self.gamestate)
+
         # if the player's score has increased since the last frame,
         # then reset the food position.
+        # debug note: the reason this wasn't working before is because we hadn't updated the player score yet!
+        # self.me.score updates after self.me.update() runs. That's why I moved that line to above.
+        # Now, the order is as follows:
+        # 1. move all the enemies
+        # 2. move the player (and check for collisions with enemies and food, possibly increasing the score)
+        # 3. move the food if the player picked it up
+        # 4. update the gamestate (including new score)
+        # 5. update the scoreboard using the updated gamestate
         if self.me.score != self.gamestate["score"]:
             self.food.reset(self.gamestate)
         
-        # the order of the following three update events is up for debate
-        # since the enemy and player movements use the current gamestate,
-        # you could argue they need to update the gamestate first. But then
-        # one of them gets out of date information.
-        # This way both of them get information that's one frame old.
-        # As a result, collisions might be a bit wonky.
-        self.move_enemies()
-        self.me.update(self.gamestate)
         self.update_gamestate()
 
         # updating the score on screen must go last
