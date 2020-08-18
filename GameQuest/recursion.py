@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     # first ten approximations
     import matplotlib.pyplot as plt
-    for n in range(1,30,3):
+    for n in range(1,100,10):
         plt.plot([e(x,n=n) for x in range(1,30)], label=f"Approx. n={n}")
     plt.plot([math.exp(x) for x in range(1, 30)], label="Actual")
     plt.legend()

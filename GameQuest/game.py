@@ -26,6 +26,7 @@ class Game:
 
         self.me = Player() # initialize the player
         self.gamestate['score'] = self.me.score # get player's initial score (0)
+        self.gamestate['lives'] = self.me.lives
 
         self.food = Food(self.gamestate) # initialize the food
         self.gamestate['food'] = self.food._food.pos() # get the food position
@@ -42,19 +43,15 @@ class Game:
     # player movement functions (not really used)
     def move_forward(self):
         self.me._player.forward(10)
-        self.me.update(self.gamestate)
 
     def move_backward(self):
         self.me._player.backward(10)
-        self.me.update(self.gamestate)
 
     def turn_left(self):
         self.me._player.left(15)
-        self.me.update(self.gamestate)
 
     def turn_right(self):
         self.me._player.right(15)
-        self.me.update(self.gamestate)
 
     # iterate over list of enemies and call their update methods
     def move_enemies(self):
@@ -70,8 +67,23 @@ class Game:
 
         self.gamestate["food"] = self.food._food.pos() # get food position
         self.gamestate["score"] = self.me.score # get current score
+        self.gamestate['lives'] = self.me.lives
+
+    def gameOver(self):
+        for e in self.enemies:
+            e._enemy.hideturtle()
+        self.me._player.hideturtle()
+        self.food._food.hideturtle()
+        self.gameover = turtle.Turtle()
+        self.gameover.color("white")
+        self.gameover.penup()
+        self.gameover.hideturtle()
+        self.gameover.setx(self.gameover.xcor()-200)
+        self.gameover.write("GAME OVER", font=("Arial", 50, "bold"))
 
     def update(self):
+
+        update_score = False
 
         self.move_enemies()
         self.me.update(self.gamestate)
@@ -88,8 +100,15 @@ class Game:
         # 5. update the scoreboard using the updated gamestate
         if self.me.score != self.gamestate["score"]:
             self.food.reset(self.gamestate)
+            update_score = True
+
+        if self.me.lives != self.gamestate["lives"]:
+            update_score = True
         
         self.update_gamestate()
+        
+        if update_score:
+            self.scoreboard.update(self.gamestate)
 
-        # updating the score on screen must go last
-        self.scoreboard.update(self.gamestate)
+        if self.gamestate["lives"] == 0:
+            self.gameOver()
