@@ -40,5 +40,21 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
+def e(x, n=100):
+    series = [x**i / factorial(i) for i in range(n)]
+    return sum(series)
+
 if __name__ == "__main__":
-    [print(factorial(x)) for x in range(100)]
+    #[print(factorial(x)) for x in range(100)]
+    import math
+    print(math.e)
+    #[print(e(1, n=n)) for n in range(100)]
+
+    # first ten approximations
+    import matplotlib.pyplot as plt
+    for n in range(1,30,3):
+        plt.plot([e(x,n=n) for x in range(1,30)], label=f"Approx. n={n}")
+    plt.plot([math.exp(x) for x in range(1, 30)], label="Actual")
+    plt.legend()
+    plt.yscale("log")
+    plt.show()
