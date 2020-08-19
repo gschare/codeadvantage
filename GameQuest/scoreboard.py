@@ -23,11 +23,11 @@ class Scoreboard:
 
         self._scoreboard.write(gamestate['score'], font=self.scorefont)
         
-        self._scoreboard.sety(self._scoreboard.ycor() + 20)
+        self._scoreboard.sety(self._scoreboard.ycor() + 30)
 
         for _ in range(gamestate['lives']):
             self._scoreboard.color(self.livescolor)
-            self._scoreboard.setx(self._scoreboard.xcor() + self.livesfont[1] + 20) 
+            self._scoreboard.setx(self._scoreboard.xcor() + self.livesfont[1] + 30) 
             self._scoreboard.write("<3", font=self.livesfont)
 
         # draw the current score (from gamestate) to the screen

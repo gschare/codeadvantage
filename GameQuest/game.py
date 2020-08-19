@@ -3,6 +3,7 @@ from player import Player   # Player()
 from enemy import Enemy     # Enemy()
 from food import Food       # Food()
 from scoreboard import Scoreboard
+from bullet import Bullet
 
 class Game:
 
@@ -27,6 +28,7 @@ class Game:
         self.me = Player() # initialize the player
         self.gamestate['score'] = self.me.score # get player's initial score (0)
         self.gamestate['lives'] = self.me.lives
+        self.gamestate['bullets'] = []
 
         self.food = Food(self.gamestate) # initialize the food
         self.gamestate['food'] = self.food._food.pos() # get the food position
@@ -40,18 +42,13 @@ class Game:
         # create the scoreboard
         self.scoreboard = Scoreboard(self.gamestate)
 
-    # player movement functions (not really used)
-    def move_forward(self):
-        self.me._player.forward(10)
+    # player controls
+    def move(self, x, y):
+        self.me.update_destination((x,y))
 
-    def move_backward(self):
-        self.me._player.backward(10)
-
-    def turn_left(self):
-        self.me._player.left(15)
-
-    def turn_right(self):
-        self.me._player.right(15)
+    def shoot(self, x, y):
+        self.me.shoot(x, y)
+        self.create_bullet(*self.me._player.pos(), self.me._player.heading())
 
     # iterate over list of enemies and call their update methods
     def move_enemies(self):
@@ -68,6 +65,19 @@ class Game:
         self.gamestate["food"] = self.food._food.pos() # get food position
         self.gamestate["score"] = self.me.score # get current score
         self.gamestate['lives'] = self.me.lives
+
+        new_bullets = []
+        for bullet in self.gamestate["bullets"]:
+            if not bullet.dead:
+                new_bullets.append(bullet)
+        self.gamestate["bullets"] = new_bullets
+
+        # alternate ways of doing this:
+        # self.gamestate["bullets"] = [b for b in self.gamestate["bullets"] if not b.dead]
+        # self.gamestate["bullets"] = filter(lambda x: not x.dead, self.gamestate["bullets"])
+
+    def create_bullet(self, x, y, angle):
+        self.gamestate["bullets"].append(Bullet(x, y, angle))
 
     def gameOver(self):
         for e in self.enemies:
@@ -87,6 +97,9 @@ class Game:
 
         self.move_enemies()
         self.me.update(self.gamestate)
+
+        for bullet in self.gamestate["bullets"]:
+            bullet.update()
 
         # if the player's score has increased since the last frame,
         # then reset the food position.

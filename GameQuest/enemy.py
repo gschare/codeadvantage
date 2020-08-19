@@ -1,4 +1,5 @@
 import turtle, random
+from helpers import distance, check_border_collision, check_object_collision
 
 class Enemy:
     outline_color = (1.0, 0.0, 0.0) # red
@@ -12,25 +13,19 @@ class Enemy:
 
     def __init__(self, gamestate):
         self._enemy = turtle.Turtle()
+        self._enemy.shape("circle")
         self._enemy.shapesize(self.size, self.size)
         self._enemy.penup()
-        self._enemy.color(self.outline_color)
+        self.color = (
+            random.uniform(0.3, 1),
+            random.uniform(0.3, 1),
+            random.uniform(0.3, 1)
+        )
+        self._enemy.color(self.color)
         self._enemy.goto(
             random.randint(gamestate['min_x'], gamestate['max_x']), # x
             random.randint(gamestate['min_y'], gamestate['max_y'])  # y
         )
-
-    # same as player border collision
-    def check_border_collision(self, gamestate):
-        left   = self._enemy.xcor() - self.radius < gamestate['min_x']
-        right  = self._enemy.xcor() + self.radius> gamestate['max_x']
-        bottom = self._enemy.ycor() - self.radius < gamestate['min_y']
-        top    = self._enemy.ycor() + self.radius > gamestate['max_y']
-
-        if left or right or bottom or top:
-            return True
-        else:
-            return False
 
     # in some sense, we might want to add an object collision function here
     # to check whether a given enemy has collided with the player.
@@ -55,12 +50,15 @@ class Enemy:
     # movement/update function
     def update(self, gamestate):
 
+        # check bullet collision
+        
+
         # turn randomly left or right
         self._enemy.left(random.randint(
             self.min_turn_speed, self.max_turn_speed))
 
         # move a random amount forward
-        if not self.check_border_collision(gamestate):
+        if not check_border_collision(self._enemy.pos(), self.radius, gamestate):
             self._enemy.forward(random.randint(
                 self.min_move_speed, self.max_move_speed))
 
