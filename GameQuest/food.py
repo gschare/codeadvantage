@@ -14,7 +14,6 @@ class Food:
     
     def reset(self, gamestate):
         # every time you reset, change color to random
-        print("Food reset")
         self.color = (
             random.uniform(0.3, 1),
             random.uniform(0.3, 1),

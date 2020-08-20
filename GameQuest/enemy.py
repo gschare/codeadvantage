@@ -5,11 +5,12 @@ class Enemy:
     outline_color = (1.0, 0.0, 0.0) # red
     # maybe disguise as food? same shape, random colors?
     size = 1.0
-    radius = 5
+    radius = 10
     min_move_speed = 0
     max_move_speed = 2
     min_turn_speed = -15
     max_turn_speed = 15
+    dead = False
 
     def __init__(self, gamestate):
         self._enemy = turtle.Turtle()
@@ -51,18 +52,27 @@ class Enemy:
     def update(self, gamestate):
 
         # check bullet collision
-        
+        for coord in gamestate["bullets"]:
+            if check_object_collision(
+                self._enemy.pos(), coord,
+                self.radius, gamestate['bullet_radius']):
+                self.dead = True
 
-        # turn randomly left or right
-        self._enemy.left(random.randint(
-            self.min_turn_speed, self.max_turn_speed))
+        if not self.dead:
+            
+            # turn randomly left or right
+            self._enemy.left(random.randint(
+                self.min_turn_speed, self.max_turn_speed))
 
-        # move a random amount forward
-        if not check_border_collision(self._enemy.pos(), self.radius, gamestate):
-            self._enemy.forward(random.randint(
-                self.min_move_speed, self.max_move_speed))
+            # move a random amount forward
+            if not check_border_collision(self._enemy.pos(), self.radius, gamestate):
+                self._enemy.forward(random.randint(
+                    self.min_move_speed, self.max_move_speed))
 
-        # if you collide with the border, turn around and move away
-        else: 
-            self._enemy.right(180)
-            self._enemy.forward(self.max_move_speed)
+            # if you collide with the border, turn around and move away
+            else: 
+                self._enemy.right(180)
+                self._enemy.forward(self.max_move_speed)
+
+        else:
+            self._enemy.hideturtle()

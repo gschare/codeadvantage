@@ -5,6 +5,7 @@ class Scoreboard:
     scorecolor = "white"
     livesfont = ("Arial", 50, "bold")
     livescolor = "red"
+    smallfont = ("Arial", 25, "bold")
 
     def __init__(self, gamestate):
         self._scoreboard = turtle.Turtle()
@@ -29,5 +30,17 @@ class Scoreboard:
             self._scoreboard.color(self.livescolor)
             self._scoreboard.setx(self._scoreboard.xcor() + self.livesfont[1] + 30) 
             self._scoreboard.write("<3", font=self.livesfont)
+
+        self._scoreboard.color(self.scorecolor)
+        self._scoreboard.goto(
+            gamestate["max_x"] - 300,
+            gamestate['max_y'] - 150
+            )
+        self._scoreboard.write(len(gamestate["enemies"]), font=self.scorefont)
+        self._scoreboard.setx(self._scoreboard.xcor() - 75)
+        self._scoreboard.sety(self._scoreboard.ycor() - 20)
+        self._scoreboard.write("enemies remaining", font=self.smallfont)
+
+
 
         # draw the current score (from gamestate) to the screen

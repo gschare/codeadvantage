@@ -1,4 +1,5 @@
-import turtle, math
+import turtle
+from helpers import check_border_collision
 
 class Bullet:
     size = 1.0
@@ -16,8 +17,8 @@ class Bullet:
         self._bullet.setheading(angle)
         self._bullet.pendown()
 
-    def update(self):
-        if self._bullet.isvisible():
+    def update(self, gamestate):
+        if not check_border_collision(self._bullet.pos(), self.radius, gamestate):
             self._bullet.forward(self.move_speed)
         else:
             self.dead = True
