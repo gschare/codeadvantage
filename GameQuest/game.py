@@ -12,6 +12,7 @@ class Game:
                    # we pass this info to other objects so they can know
                    # what's going on in the game without directly accessing
                    # each other's info.
+    starting_ammo = 3
 
     def __init__(self, screen):
 
@@ -28,7 +29,7 @@ class Game:
         self.gamestate['food_radius'] = Food.radius   # the collision box
         self.gamestate['bullet_radius'] = Bullet.radius
 
-        self.me = Player() # initialize the player
+        self.me = Player(starting_ammo=self.starting_ammo) # initialize the player
         self.gamestate['score'] = self.me.score # get player's initial score (0)
         self.gamestate['lives'] = self.me.lives
 
@@ -99,7 +100,8 @@ class Game:
         self.bullets.append(Bullet(x, y, angle))
         self.gamestate["bullets"].append((x,y))
 
-    def gameOver(self):
+    def gameOver(self, win):
+        msg = "YOU WIN" if win else "GAME OVER"
         self.gamestate["gameover"] = True
         for e in self.enemies:
             e.dead = True
@@ -110,7 +112,7 @@ class Game:
         self.gameover.penup()
         self.gameover.hideturtle()
         self.gameover.setx(self.gameover.xcor()-200)
-        self.gameover.write("GAME OVER", font=("Arial", 50, "bold"))
+        self.gameover.write(msg, font=("Arial", 50, "bold"))
 
     def update(self):
 
@@ -132,8 +134,10 @@ class Game:
         # 3. move the food if the player picked it up
         # 4. update the gamestate (including new score)
         # 5. update the scoreboard using the updated gamestate
-        if self.me.score != self.gamestate["score"]:
+        if self.me.score > self.gamestate["score"]:
             self.food.reset(self.gamestate)
+            self.update_score = True
+        if self.me.score < self.gamestate["score"]:
             self.update_score = True
 
         if self.me.lives != self.gamestate["lives"]:
@@ -144,5 +148,8 @@ class Game:
         if self.update_score and not self.gamestate["gameover"]:
             self.scoreboard.update(self.gamestate)
 
-        if self.gamestate["lives"] == 0:
-            self.gameOver()
+        if self.gamestate["lives"] == 0 and not self.gamestate["gameover"]:
+            self.gameOver(win=False)
+        
+        if len(self.gamestate["enemies"]) == 0 and not self.gamestate["gameover"]:
+            self.gameOver(win=True)

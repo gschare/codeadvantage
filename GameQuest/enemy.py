@@ -23,10 +23,11 @@ class Enemy:
             random.uniform(0.3, 1)
         )
         self._enemy.color(self.color)
-        self._enemy.goto(
-            random.randint(gamestate['min_x'], gamestate['max_x']), # x
-            random.randint(gamestate['min_y'], gamestate['max_y'])  # y
-        )
+        while abs(self._enemy.xcor()) < 50 or abs(self._enemy.ycor()) < 50:
+            self._enemy.goto(
+                random.randint(gamestate['min_x'], gamestate['max_x']), # x
+                random.randint(gamestate['min_y'], gamestate['max_y'])  # y
+            )
 
     # in some sense, we might want to add an object collision function here
     # to check whether a given enemy has collided with the player.

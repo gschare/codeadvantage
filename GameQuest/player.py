@@ -12,7 +12,7 @@ class Player:
     MAX_LIVES = 3
     invuln_frames = 10
 
-    def __init__(self):
+    def __init__(self, starting_ammo):
         self._player = turtle.Turtle()
         self._player.shapesize(self.size, self.size)
         self._player.penup()
@@ -20,7 +20,7 @@ class Player:
         self._player.color(self.outline_color)
         self._player.fillcolor(self.fill_color)
 
-        self.score = 0 # initial score of 0
+        self.score = starting_ammo # initial score of 0
         self.dest = (0,0) # where the player should be moving towards
 
         self.invulnerable = False
